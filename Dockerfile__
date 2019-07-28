@@ -1,0 +1,3 @@
+FROM openjdk:8-jdk-alpine
+ADD target/log-monitoring-0.0.1-SNAPSHOT.jar log-monitoring-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java", "-jar", "log-monitoring-0.0.1-SNAPSHOT.jar"]
