@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,17 +17,20 @@ public class LoggerController {
     private static final Logger logger = LoggerFactory.getLogger(LoggerController.class);
 
     @Autowired
+    LogGenerator logGenerator;
+
+    @Autowired
     LogService logService;
 
     @GetMapping("/")
     public String home(Model model) throws InterruptedException {
 
         for(int i = 0; i < 50000; i++) {
-            logService.generateLogs("İstanbul", LogLevel.INFO);
-            logService.generateLogs("Tokyo", LogLevel.WARN);
-            logService.generateLogs("Moskow", LogLevel.TRACE);
-            logService.generateLogs("Beijing", LogLevel.DEBUG);
-            logService.generateLogs("London", LogLevel.ERROR);
+            logService.save(logGenerator.generateLogs("İstanbul", LogLevel.INFO));
+            logService.save(logGenerator.generateLogs("Tokyo", LogLevel.WARN));
+            logService.save(logGenerator.generateLogs("Moskow", LogLevel.TRACE));
+            logService.save(logGenerator.generateLogs("Beijing", LogLevel.DEBUG));
+            logService.save(logGenerator.generateLogs("London", LogLevel.ERROR));
 
             Thread.sleep(100);
         }
@@ -37,4 +42,10 @@ public class LoggerController {
 
         return "index";
     }
+
+    @GetMapping("/api")
+    public Iterable<LogModel> studentV2() {
+        return logService.findAll();
+    }
+
 }
