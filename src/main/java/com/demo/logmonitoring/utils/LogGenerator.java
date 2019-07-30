@@ -1,5 +1,7 @@
-package com.demo.logmonitoring;
+package com.demo.logmonitoring.utils;
 
+import com.demo.logmonitoring.model.Log;
+import com.demo.logmonitoring.service.LogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -8,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class LogGenerator {
     private static final Logger logger = LoggerFactory.getLogger(LogService.class);
 
-    public LogModel generateLogs(String serverName, LogLevel logLevel) {
+    public Log generateLogs(String serverName, LogLevel logLevel) {
 
         String logMessage = "[" + serverName + "]" + " Hello from - " + serverName;
 
@@ -33,7 +35,7 @@ public class LogGenerator {
                 break;
         }
 
-        return new LogModel(serverName, logLevel.name());
+        return new Log(serverName, logLevel.name());
     }
 
 }

@@ -1,4 +1,4 @@
-package com.demo.logmonitoring;
+package com.demo.logmonitoring.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -6,21 +6,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
 @Document
-public class LogModel {
+public class Log {
 
     @Id
     private String id;
     private String serverName;
     private String logLevel;
 
-    public LogModel(String id, String serverName, String logLevel) {
+    public Log(String id, String serverName, String logLevel) {
         super();
         this.id = id;
         this.serverName = serverName;
         this.logLevel = logLevel;
     }
 
-    public LogModel(String serverName, String logLevel) {
+    public Log(String serverName, String logLevel) {
         super();
         this.serverName = serverName;
         this.logLevel = logLevel;

@@ -1,5 +1,7 @@
-package com.demo.logmonitoring;
+package com.demo.logmonitoring.service;
 
+import com.demo.logmonitoring.model.Log;
+import com.demo.logmonitoring.repository.LogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +14,17 @@ public class LogServiceImp implements LogService {
     LogRepository logRepository;
 
     @Override
-    public Iterable<LogModel> findAll() {
+    public Iterable<Log> findAll() {
         return logRepository.findAll();
     }
 
     @Override
-    public LogModel save(LogModel log) {
+    public Log save(Log log) {
         return logRepository.save(log);
     }
 
     @Override
-    public Optional<LogModel> findByID(String id) {
+    public Optional<Log> findByID(String id) {
         return logRepository.findById(id);
     }
 
