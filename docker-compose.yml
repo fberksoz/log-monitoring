@@ -6,9 +6,41 @@ services:
     ports:
       - 27017:27017
     command: --smallfiles
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    restart: always
+    ports:
+      - 2181:2181
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    restart: always
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
+    links:
+      - zookeeper:zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090/tcp
+    links:
+      - kafka
+
   app:
     image: mehmetimirhan/log-monitoring
     ports:
       - 8080:8080
+      - 8084:8080
+      - 8085:8080
     links:
       - mongodb
+      - kafka:kafka
